@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Obtener la ruta absoluta del directorio donde reside este script envoltorio
+# Esto es importante para que funcione sin importar desde dónde se llame
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+
+# Definir la ruta al ejecutable de Python dentro del venv
+PYTHON_EXEC="$SCRIPT_DIR/.venv/bin/python"
+# Definir la ruta al script principal de Python
+AI_SCRIPT="$SCRIPT_DIR/ai.py"
+
+# Verificar si el ejecutable de Python del venv existe
+if [ ! -f "$PYTHON_EXEC" ]; then
+    echo "Error: Python executable not found in .venv. Did you run 'uv venv'?" >&2
+    exit 1
+fi
+
+# Verificar si el script principal existe
+if [ ! -f "$AI_SCRIPT" ]; then
+    echo "Error: Main script ai.py not found in $SCRIPT_DIR" >&2
+    exit 1
+fi
+
+# Ejecutar el script de Python usando el intérprete del venv,
+# pasando todos los argumentos ($@) que recibió este script envoltorio
+"$PYTHON_EXEC" "$AI_SCRIPT" "$@"
+
+# Salir con el código de salida del script de Python
+exit $?

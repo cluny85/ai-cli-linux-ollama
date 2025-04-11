@@ -1,0 +1,16 @@
+# .gitignore
+
+# Ignore the actual environment file
+.env
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment directories (optional, but common)
+venv/
+.venv/
+env/
+.env/
